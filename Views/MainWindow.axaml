@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels="clr-namespace:BusFlowApp.ViewModels"
+        x:Class="BusFlowApp.Views.MainWindow"
+        x:DataType="viewModels:MainWindowViewModel"
+        Title="BusFlowApp" Width="1280" Height="720">
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Spacing="10">
+            <Button Content="Добавить мужчину" Click="AddMan_Click"/>
+            <Button Content="Добавить женщину" Click="AddWoman_Click"/>
+            <Button Content="Добавить ребёнка" Click="AddChild_Click"/>
+            <Button Content="Добавить инвалида" Click="AddDisabled_Click"/>
+        </StackPanel>
+
+        <Grid DockPanel.Dock="Bottom" RowDefinitions="2*,1*">
+            
+            <Canvas Grid.Row="0">
+                <Image Source="avares://BusFlowApp/Assets/bus_stop.png"
+                       Width="80" Height="80"
+                       Canvas.Left="0" Canvas.Top="150"/>
+
+                <Canvas x:Name="BusPanel"
+                        Width="200" Height="100"
+                        Canvas.Top="150"
+                        Background="Transparent"
+                        RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="0"/>
+                    </Canvas.RenderTransform>
+
+                    <Image Source="avares://BusFlowApp/Assets/bus.png"
+                           Width="200" Height="100"
+                           Stretch="UniformToFill"/>
+                </Canvas>
+
+                <ItemsControl ItemsSource="{Binding BusFlowViewModel.Passengers}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="avares://BusFlowApp/Assets/man.png"
+                                   Width="20" Height="20"
+                                   Opacity="0"
+                                   x:Name="PassengerImage"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                
+            </Canvas>
+
+            <ListBox Grid.Row="1" ItemsSource="{Binding BusFlowViewModel.Log}" Margin="10"/>
+        </Grid>
+    </DockPanel>
+</Window>
