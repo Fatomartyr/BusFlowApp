@@ -14,17 +14,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = new MainWindowViewModel();
-        if (DataContext is MainWindowViewModel viewModel)
-        { 
-            //viewModel.BusFlowViewModel.PassengersBoardedAnimation += OnPassengersBoarded;
-        }
         StartBusLoop();
     }
-
-    // private async void OnPassengersBoarded()
-    // {
-    //     await Task.Delay(500);
-    // }
+    
     
 
     private async void StartBusLoop()
