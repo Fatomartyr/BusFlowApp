@@ -35,34 +35,33 @@
                            Stretch="UniformToFill"/>
                 </Canvas>
                 
-                <ItemsControl Canvas.Left="0" Canvas.Top="0"
-                              Width="1280" Height="720"
-                              ItemsSource="{Binding BusFlowViewModel.VisualPassengers}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <Canvas/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ContentControl Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}">
+                <Canvas x:Name="PeoplePanel">
+                    <ItemsControl ItemsSource="{Binding BusFlowViewModel.VisualPassengers}"
+                                  Width="1280" Height="720">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas Width="1280" Height="720"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.Styles>
+                            <Style Selector="ContentPresenter" x:DataType="viewModels:VisualPassenger">
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                            </Style>
+                        </ItemsControl.Styles>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
                                 <Image Source="avares://BusFlowApp/Assets/man.png"
-                                       Width="30" Height="30"
-                                />  
-                                
-                                
-                            </ContentControl>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-
-    
-
+                                       Width="30" Height="30"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Canvas>
             </Canvas>
-
+            
             <ListBox Grid.Row="1" ItemsSource="{Binding BusFlowViewModel.Log}" Margin="10"/>
-
         </Grid>
     </DockPanel>
 </Window>

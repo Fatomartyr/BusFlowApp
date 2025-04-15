@@ -38,7 +38,7 @@ public class BusFlowViewModel : ObservableObject
             await Task.Delay(10000);
             _bus.Arrive();
             Log.Add("Автобус прибыл на остановку");
-            await Task.Delay(15000);
+            await Task.Delay(3000);
 
             var toBoard = _busStop.GetBoardingPassengers(_bus.Capacity - _bus.Passengers.Count);
 
@@ -47,7 +47,7 @@ public class BusFlowViewModel : ObservableObject
                 _bus.BoardPassenger(p);
                 Passengers.Remove(p);
 
-                var visual = VisualPassengers.FirstOrDefault(v => v.Passenger == p);
+                var visual = VisualPassengers.FirstOrDefault(v => v.Passenger.Name == p.Name);
                 if (visual != null)
                     VisualPassengers.Remove(visual);
             }
@@ -88,12 +88,12 @@ public class BusFlowViewModel : ObservableObject
 
     private (double x, double y) GenerateRandomPosition()
     {
-        double y = _random.Next(150, 230);
+        double y = _random.Next(160, 200);
         double x;
         int attempts = 0;
         do
         {
-            x = _random.Next(90, 300); 
+            x = _random.Next(30, 80); 
             attempts++;
         } while (VisualPassengers.Any(p => Math.Abs(p.X - x) < 25 && Math.Abs(p.Y - y) < 25) && attempts < 20);
 

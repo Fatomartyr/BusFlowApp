@@ -34,7 +34,7 @@ public partial class MainWindow : Window
         while (true)
         {
             await AnimateBus(transform, screenWidth, stopX, TimeSpan.FromSeconds(10));
-            await Task.Delay(15000);
+            await Task.Delay(3000);
             await AnimateBus(transform, stopX, offScreenLeft, TimeSpan.FromSeconds(4));
             await Task.Delay(1000);
         }
