@@ -21,7 +21,8 @@ public class BusStop
     public List<IPassenger> GetBoardingPassengers(int passengersToBoard)
     {
         var random = new Random();
-        int countToBoard = random.Next(0, Math.Min(passengersToBoard, WaitingPassengers.Count) + 1);
+        int countToBoard = random.Next(1, Math.Min(passengersToBoard, WaitingPassengers.Count) + 1);
+        
         var toBoard = WaitingPassengers.GetRange(0, 
             System.Math.Min(countToBoard, WaitingPassengers.Count));
         WaitingPassengers.RemoveRange(0, toBoard.Count);

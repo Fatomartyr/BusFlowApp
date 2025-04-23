@@ -8,4 +8,6 @@ public class Man : IPassenger
     {
         Name = name;
     }
+   
+    
 }

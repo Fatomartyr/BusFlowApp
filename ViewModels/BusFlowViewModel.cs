@@ -24,7 +24,6 @@ public class BusFlowViewModel : ObservableObject
         _bus = new Bus(capacity: 100);
         _busStop = new BusStop();
 
-        _bus.ArrivedAtStop += OnBusArrived;
         _bus.PassengerBoarded += name => Log.Add($"{name} сел(а) в автобус.");
         _bus.BusOvercrowded += () => Log.Add("Автобус переполнен!");
 
@@ -39,7 +38,7 @@ public class BusFlowViewModel : ObservableObject
             _bus.Arrive();
             Log.Add("Автобус прибыл на остановку");
             await Task.Delay(3000);
-
+            
             var toBoard = _busStop.GetBoardingPassengers(_bus.Capacity - _bus.Passengers.Count);
 
             foreach (var p in toBoard)
@@ -47,26 +46,18 @@ public class BusFlowViewModel : ObservableObject
                 _bus.BoardPassenger(p);
                 Passengers.Remove(p);
 
-                var visual = VisualPassengers.FirstOrDefault(v => v.Passenger.Name == p.Name);
+                var visual = VisualPassengers.FirstOrDefault(v => v.Passenger == p);
                 if (visual != null)
                     VisualPassengers.Remove(visual);
             }
             OnPropertyChanged(nameof(VisualPassengers));
+            OnPropertyChanged(nameof(Passengers));
             await Task.Delay(5000);
             Log.Add("Автобус уехал с остановки");
             OnPropertyChanged(nameof(Log));
         }
     }
-
-    private void OnBusArrived()
-    {
-        var toBoard = _busStop.GetBoardingPassengers(_bus.Capacity - _bus.Passengers.Count);
-        foreach (var p in toBoard)
-        {
-            _bus.BoardPassenger(p);
-        }
-        OnPropertyChanged(nameof(Passengers));
-    }
+    
 
     private void AddPassenger(IPassenger passenger, string imagePath)
     {
